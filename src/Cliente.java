@@ -11,7 +11,15 @@ class Cliente{
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getTarjetaCredito() {
         return tarjetaCredito;
+    }
+
+    public void setTarjetaCredito(String tarjetaCredito) {
+        this.tarjetaCredito = tarjetaCredito;
     }
 }
