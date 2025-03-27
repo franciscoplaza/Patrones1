@@ -2,7 +2,11 @@ import java.util.ArrayList;
 
 public class EmpleadoDAO implements IEmpleadoDAO {
 
-    private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+    private ArrayList<Empleado> empleados;
+
+    public EmpleadoDAO() {
+        this.empleados = new ArrayList<>();
+    }
     @Override
     public void agregarEmpleado(Empleado empleado) {
         empleados.add(empleado);
@@ -10,30 +14,39 @@ public class EmpleadoDAO implements IEmpleadoDAO {
 
     @Override
     public Empleado obtenerEmpleado(String nombre){
-        for (Empleado empleado : empleados){
-            if (empleado.getNombre().equals(nombre)){
-                return empleado;
-            }
+        int indice = obtenerIndiceEmpleado(nombre);
+
+        if(indice != -1){
+            return empleados.get(indice);
         }
         return null;
     }
 
     @Override
     public void eliminarEmpleado(String nombre) {
-        for (Empleado empleado : empleados){
-            if (empleado.getNombre().equals(nombre)){
-                empleados.remove(empleado);
-            }
+        int indice = obtenerIndiceEmpleado(nombre);
+
+        if(indice != -1){
+            empleados.remove(indice);
         }
     }
 
     @Override
     public void actualizarEmpleado(Empleado empleado) {
-        for (int i = 0; i < empleados.size(); i++){
-            if (empleados.get(i).getNombre().equals(empleado.getNombre())){
-                empleados.set(i, empleado);
-                break;
-            }
+        int indice = obtenerIndiceEmpleado(empleado.getNombre());
+
+        if (indice != -1){
+            empleados.get(indice).setSalario(empleado.getSalario() + 1000);
         }
     }
+
+    private int obtenerIndiceEmpleado(String nombre){
+        for (int i = 0; i < empleados.size(); i++){
+            if (empleados.get(i).getNombre().equals(nombre)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
